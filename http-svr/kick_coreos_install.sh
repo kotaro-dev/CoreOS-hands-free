@@ -1,0 +1,27 @@
+#!/bin/sh
+
+httpsvr=192.168.131.10
+# branch=master
+# subpath=github
+
+sudo wget http://${httpsvr}/cloud-config.yml -O /home/core/cloud-config.yml
+
+#change hostname based ip guest addr
+bshstnm=gstcore
+gstip=`ip route|grep enp0s8|cut -f 12 -d " "|cut -f 4 -d .`
+gstnm=${bshstnm}${gstip}
+
+echo ${gstnm}
+
+##sed -e s/coreos-handoff/${gstnm]/g /home/core/cloud-config.yml
+sudo sed "/^hostname: /c\hostname: ${gstnm}" /home/core/cloud-config.yml > /home/core/cloud-config
+
+if [ "${bshstnm}" == "${gstnm}" ]; then
+  sudo coreos-install -d /dev/sda -C stable -c /home/core/cloud-config.yml
+else
+  sudo coreos-install -d /dev/sda -C stable -c /home/core/cloud-config
+fi
+
+sudo eject
+
+sudo reboot
