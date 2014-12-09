@@ -2,27 +2,25 @@ sudo apt-get install -y syslinux mtools mbr genisoimage dvd+rw-tools
 
 mkdir -p tmp && cd tmp
 
-(wget or cp original ubuntu14.04.1-server.iso)
--> tmp/ubuntu14.04.1-server.iso
+(wget or cp original coreos_production_iso_image.iso)
+-> tmp/coreos_production_iso_image.iso
 
 mkdir -p tmp/dvd
 mkdir -p tmp/dvdr
 
-sudo mount -t iso9660 tmp/ubuntu14.04.1-server.iso tmp/dvd
+sudo mount -t iso9660 tmp/coreos_production_iso_image.iso tmp/dvd
 
 cd dvd
 find . ! -type l | cpio -pdum ../dvdr/
 
-(edited isolinix/isolinux.cfg)
-(added  preseed/preseed.cfg) or none
+../dvdr/
+  -coreos
+  -isolinux
+  -syslinux
 
+(edited syslinix/syslinux.cfg)
 
-#for local
 sudo genisoimage -N -J -R -D -V "CoreOS-URL" -o coreos-url-local.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table dvdr
 
-#for github
-sudo genisoimage -N -J -R -D -V "CoreOS-URL" -o coreos-url-github.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table dvdr
-
-
-chmod 777 *.iso
-sudo cp *.iso /mnt/samba/
+chmod 777 coreos-url-local.iso
+sudo cp coreos-url-local.iso /mnt/samba/
