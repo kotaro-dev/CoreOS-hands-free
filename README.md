@@ -38,3 +38,8 @@ ubuntu preseed のように 自動でinstall できないか？と思い試し�
 
 正直、参考になる方がいる気がしないのですが、  
 何度かCoreOSをinstallしている内に、preseed っぽいことが出来ないか気になって試してみました。
+
+###追加
+
+- [kick_coreos_install.sh] にguest os の ip を取得して cloud-config の hostname を変更する処理を追加。  
+  (本当は、http svr 側でcloud-config 管理用のプログラムを書くべきと思う。)
