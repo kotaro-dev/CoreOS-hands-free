@@ -13,8 +13,10 @@ gstnm=${bshstnm}${gstip}
 
 echo ${gstnm}
 
-##sed -e s/coreos-handoff/${gstnm]/g /home/core/cloud-config.yml
-sudo sed "/^hostname: /c\hostname: ${gstnm}" /home/core/cloud-config.yml > /home/core/cloud-config
+## sed -e s/coreos-handoff/${gstnm]/g /home/core/cloud-config.yml
+## sudo sed "/^hostname: /c\hostname: ${gstnm}" /home/core/cloud-config.yml > /home/core/cloud-config
+## sudo sed -i -e "/^hostname: /c\hostname: ${gstnm}" /home/core/cloud-config.yml
+sudo sed -e "/^hostname: /c\hostname: ${gstnm}" /home/core/cloud-config.yml |sudo sed -e 's/\r$//' >/home/core/cloud-config
 
 if [ "${bshstnm}" == "${gstnm}" ]; then
   sudo coreos-install -d /dev/sda -C stable -c /home/core/cloud-config.yml
