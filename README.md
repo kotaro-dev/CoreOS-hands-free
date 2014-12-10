@@ -43,3 +43,6 @@ ubuntu preseed のように 自動でinstall できないか？と思い試し�
 
 - [kick_coreos_install.sh] にguest os の ip を取得して cloud-config の hostname を変更する処理を追加。  
   (本当は、http svr 側でcloud-config 管理用のプログラムを書くべきと思う。)
+
+- [kick_coreos_install.sh] enp0s8 を eth1 に変更。  
+  (virtualbox の adaptor-type を 82540EM から virtio-net に変更)
