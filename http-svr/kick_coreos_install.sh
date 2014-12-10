@@ -8,7 +8,8 @@ sudo wget http://${httpsvr}/cloud-config.yml -O /home/core/cloud-config.yml
 
 #change hostname based ip guest addr
 bshstnm=gstcore
-gstip=`ip route|grep enp0s8|cut -f 12 -d " "|cut -f 4 -d .`
+## gstip=`ip route|grep enp0s8|cut -f 12 -d " "|cut -f 4 -d .`
+gstip=`ip route|grep eth1|cut -f 12 -d " "|cut -f 4 -d .`
 gstnm=${bshstnm}${gstip}
 
 echo ${gstnm}
