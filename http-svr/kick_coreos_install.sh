@@ -1,30 +1,17 @@
 #!/bin/sh
 
 httpsvr=192.168.131.10
-# branch=master
-# subpath=github
+static_flg=0
 
-sudo wget http://${httpsvr}/cloud-config.yml -O /home/core/cloud-config.yml
-
-#change hostname based ip guest addr
-bshstnm=gstcore
-## gstip=`ip route|grep enp0s8|cut -f 12 -d " "|cut -f 4 -d .`
-gstip=`ip route|grep eth1|cut -f 12 -d " "|cut -f 4 -d .`
-gstnm=${bshstnm}${gstip}
-
-echo ${gstnm}
-
-## sed -e s/coreos-handoff/${gstnm]/g /home/core/cloud-config.yml
-## sudo sed "/^hostname: /c\hostname: ${gstnm}" /home/core/cloud-config.yml > /home/core/cloud-config
-## sudo sed -i -e "/^hostname: /c\hostname: ${gstnm}" /home/core/cloud-config.yml
-sudo sed -e "/^hostname: /c\hostname: ${gstnm}" /home/core/cloud-config.yml |sudo sed -e 's/\r$//' >/home/core/cloud-config
-
-if [ "${bshstnm}" == "${gstnm}" ]; then
-  sudo coreos-install -d /dev/sda -C stable -c /home/core/cloud-config.yml
+if [ ${static_flg} -eq 0 ]; then
+  #hdcp
+  sudo wget http://${httpsvr}/11_kick_coreos_install.sh -O /home/core/_kick_coreos_install.sh
 else
-  sudo coreos-install -d /dev/sda -C stable -c /home/core/cloud-config
+  #static ip
+  sudo wget http://${httpsvr}/21_kick_coreos_install.sh -O /home/core/_kick_coreos_install.sh
 fi
 
-sudo eject
+sudo chmod 777 /home/core/_kick_coreos_install.sh
+sudo /home/core/_kick_coreos_install.sh
 
-sudo reboot
+
