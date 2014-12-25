@@ -22,6 +22,7 @@
 ## #       DNS=8.8.8.8
 ## #       DNS=8.8.4.4
 
+##[hint] Gateway must be set in nat interface!
 write_files:
   - path: /etc/systemd/network/static.network
     permissions: 0644
@@ -32,19 +33,20 @@ write_files:
 
       [Network]
       Address=192.168.56.90/24
-      Gateway=192.168.56.1
+      Gateway=10.0.2.2
+#      Gateway=192.168.56.1
 #      DNS=8.8.8.8
 #      DNS=8.8.4.4
 
-  - path: /etc/ssh/sshd_config
-    permissions: 0600
-    owner: root:root
-    content: |
-      # Use most defaults for sshd configuration.
-      UsePrivilegeSeparation sandbox
-      Subsystem sftp internal-sftp
-
-      UseDNS=no
+#  - path: /etc/ssh/sshd_config
+#    permissions: 0600
+#    owner: root:root
+#    content: |
+##      # Use most defaults for sshd configuration.
+#      UsePrivilegeSeparation sandbox
+#      Subsystem sftp internal-sftp
+#
+#      UseDNS=no
 
   - path: /etc/hosts
     permissions: 0600
