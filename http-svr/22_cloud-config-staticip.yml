@@ -48,14 +48,14 @@ write_files:
 #
 #      UseDNS=no
 
-  - path: /etc/hosts
-    permissions: 0600
-    owner: root:root
-    content: |
-      127.0.0.1 localhost
-      127.0.1.1 coreos-handsoff
-
-      ::1	localhost
+#  - path: /etc/hosts
+#    permissions: 0600
+#    owner: root:root
+#    content: |
+#      127.0.0.1 localhost
+#      127.0.1.1 coreos-handsoff
+#
+#      ::1	localhost
 
 coreos:
   units:
