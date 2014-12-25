@@ -40,11 +40,6 @@ ubuntu preseed のように 自動でinstall できないか？と思い試し�
 - [12_cloud-config.yml] ：とりあえず、hostname と user setting のみです。  
   [22_cloud-config-staticip.yml] ： static ip 設定用です。  
   CoreOS のdocuments に従って記述しています。  
-  nat + hostonly で環境構築した際に、DNS nameserver が host os の adapter の情報を  
-  guest os のresolv.conf に書き込んでしまい、install 後の vbox の起動時に wait がかかってしまいました。  
-  対策として、hosts を作成する 処理も追加しています。  
-  SSH 接続の処理も wait が同様の理由で、wait がかかってしまったので、  
-  sshd_config に UseDNS=no を追記しています。  
 
 - iso file の解凍・再作成 の手順は[iso/Howtomake_iso.txt] に簡単に記載しておきました。
 
@@ -57,3 +52,9 @@ ubuntu preseed のように 自動でinstall できないか？と思い試し�
 
 - [kick_coreos_install.sh] enp0s8 を eth1 に変更。  
   (virtualbox の adaptor-type を 82540EM から virtio-net に変更)
+
+- DNS が参照されない件 解消しました。  
+  原因は、[static.network] file の[Network] section の [Gateway] 項目 で  
+  hostonly 側のinterface を設定していたためでした。  
+  この設定を、nat interface (10.0.2.2) に変更する必要がありました。
+  関連して、無理やり作成していた hosts と sshd_config file は廃止しました。  
